@@ -1,0 +1,6 @@
+% Use /important/ for emphasized text and // for a single slash.
+\makeatletter
+\def\ifEmpty#1{\def\@temp{#1}\ifx\@temp\@empty} 
+\catcode47=\active
+\def/#1/{\ifEmpty{#1}\char47\else\emph{#1}\fi}
+\makeatother
