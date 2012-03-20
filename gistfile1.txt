@@ -1,6 +1,19 @@
 % Use /important/ for emphasized text and // for a single slash.
 \makeatletter
-\def\ifEmpty#1{\def\@temp{#1}\ifx\@temp\@empty} 
-\catcode47=\active
-\def/#1/{\ifEmpty{#1}\char47\@sptoken\else\emph{#1}\fi}
+\newtoggle{inSlashEmph}
+\togglefalse{inSlashEmph}
+\let\emphslash=/
+\catcode`\/=\active
+\protected\def/{%
+\@ifnextchar/{\emphslash\@gobble}{%
+\iftoggle{inSlashEmph}{%
+\global\togglefalse{inSlashEmph}%
+\egroup\xspace%
+}{%
+\global\toggletrue{inSlashEmph}%
+\bgroup\em%
+}%
+}%
+}
+%\protected\def/{\@ifnextchar/{\emphslash\@gobble}{\startStopEmph}}
 \makeatother
